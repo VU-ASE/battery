@@ -80,8 +80,6 @@ func critical_loop() error {
 			}
 		}
 	}
-
-	return nil
 }
 
 // Trivial publisher which reads battery voltage and publishes it
@@ -164,7 +162,10 @@ func main() {
 	/* Start critical loop in a self restarting way */
 	go func() {
 		for {
-			critical_loop()
+			var err = critical_loop()
+			if err != nil {
+				return
+			}
 			/* Sleep for a while before restarting */
 			time.Sleep(5 * time.Second)
 		}
