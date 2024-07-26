@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
 	// "os/signal"
 	// "syscall"
 	"time"
 
 	battery "vu/ase/battery/src/sensor"
 
-	pb_outputs "github.com/VU-ASE/pkg-CommunicationDefinitions/v2/packages/go/outputs"
-	pb_systemManager_messages "github.com/VU-ASE/pkg-CommunicationDefinitions/v2/packages/go/systemmanager"
-	serviceRunner "github.com/VU-ASE/pkg-ServiceRunner/v2/src"
+	serviceRunner "github.com/VU-ASE/roverlib/src"
+	pb_outputs "github.com/VU-ASE/rovercom/packages/go/outputs"
+	pb_core_messages "github.com/VU-ASE/rovercom/packages/go/core"
 	zmq "github.com/pebbe/zmq4"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/protobuf/proto"
@@ -27,7 +28,7 @@ const batteryWarn = 15.4
 
 var voltageValue float64 = 0
 
-var bat *battery.ADS1015;
+var bat *battery.ADS1015
 
 func exit_safely(bat *battery.ADS1015) {
 	err := bat.Delete()
@@ -126,7 +127,7 @@ func publisher(outputAddr string) {
 func run(
 	serviceInfo serviceRunner.ResolvedService,
 	sysMan serviceRunner.SystemManagerInfo,
-	_ *pb_systemManager_messages.TuningState) error {
+	_ *pb_core_messages.TuningState) error {
 
 	outputAddr, err := serviceInfo.GetOutputAddress("battery-voltage")
 	if err != nil {
@@ -146,10 +147,9 @@ func run(
 	select {} /* Block forever */
 }
 
-func tuningCallback(_ *pb_systemManager_messages.TuningState) {
+func tuningCallback(_ *pb_core_messages.TuningState) {
 	log.Info().Msg("Tuning state changed - ignored.")
 }
-
 
 func onTerminate(sig os.Signal) {
 	time.Sleep(50 * time.Millisecond)

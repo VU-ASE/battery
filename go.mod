@@ -3,11 +3,11 @@ module vu/ase/battery
 go 1.21.6
 
 require (
-	github.com/VU-ASE/pkg-CommunicationDefinitions/v2 v2.12.0
-	github.com/VU-ASE/pkg-ServiceRunner/v2 v2.13.0
+	github.com/VU-ASE/rovercom v1.0.2
+	github.com/VU-ASE/roverlib v1.0.1
 	github.com/pebbe/zmq4 v1.2.11
-	github.com/rs/zerolog v1.32.0
-	google.golang.org/protobuf v1.33.0
+	github.com/rs/zerolog v1.33.0
+	google.golang.org/protobuf v1.34.2
 )
 
 require (
