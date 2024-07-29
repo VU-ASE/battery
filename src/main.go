@@ -126,7 +126,7 @@ func publisher(outputAddr string) {
 
 func run(
 	serviceInfo serviceRunner.ResolvedService,
-	sysMan serviceRunner.SystemManagerInfo,
+	sysMan serviceRunner.CoreInfo,
 	_ *pb_core_messages.TuningState) error {
 
 	outputAddr, err := serviceInfo.GetOutputAddress("battery-voltage")
