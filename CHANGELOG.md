@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/VU-ASE/battery/compare/v1.0.0...v1.0.1) (2024-07-29)
+
+
+### Bug Fixes
+
+* rename CoreInfo ([8020ef4](https://github.com/VU-ASE/battery/commit/8020ef490842afa3e4bee286b9ec9dd3ae938434))
+
 ## 1.0.0 (2024-07-26)
 
 
