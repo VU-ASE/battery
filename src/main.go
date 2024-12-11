@@ -11,12 +11,9 @@ import (
 
 	battery "vu/ase/battery/src/sensor"
 
-	serviceRunner "github.com/VU-ASE/roverlib/src"
 	pb_outputs "github.com/VU-ASE/rovercom/packages/go/outputs"
-	pb_core_messages "github.com/VU-ASE/rovercom/packages/go/core"
-	zmq "github.com/pebbe/zmq4"
+	roverlib "github.com/VU-ASE/roverlib-go/src"
 	"github.com/rs/zerolog/log"
-	"google.golang.org/protobuf/proto"
 )
 
 const voltageLine = 2
@@ -84,15 +81,7 @@ func critical_loop() error {
 }
 
 // Trivial publisher which reads battery voltage and publishes it
-func publisher(outputAddr string) {
-	publisher, _ := zmq.NewSocket(zmq.PUB)
-	defer publisher.Close()
-
-	err := publisher.Bind(outputAddr)
-	if err != nil {
-		log.Err(err).Msg("Failed to bind publisher")
-		return
-	}
+func publisher(output roverlib.WriteStream) {
 
 	for {
 		time.Sleep(time.Duration(sampleRate) * time.Second)
@@ -110,13 +99,7 @@ func publisher(outputAddr string) {
 			},
 		}
 
-		dataBytes, err := proto.Marshal(&msg)
-		if err != nil {
-			log.Error().Err(err).Msg("Failed to marshal protobuf message")
-			continue
-		}
-
-		_, err = publisher.SendBytes(dataBytes, 0)
+		err := output.Write(&msg)
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to send protobuf message")
 			continue
@@ -125,21 +108,16 @@ func publisher(outputAddr string) {
 }
 
 func run(
-	serviceInfo serviceRunner.ResolvedService,
-	sysMan serviceRunner.CoreInfo,
-	_ *pb_core_messages.TuningState) error {
-
-	outputAddr, err := serviceInfo.GetOutputAddress("battery-voltage")
-	if err != nil {
-		log.Err(err).Msg("Failed to get tuning values")
-		return err
-	}
+	service roverlib.Service,
+	config *roverlib.ServiceConfiguration,
+) error {
+	output := service.GetWriteStream("voltage")
 
 	// Publish battery data in an auto restarting fashion
 	go func() {
 		for {
 			/* Auto restart on error */
-			publisher(outputAddr)
+			publisher(*output)
 			time.Sleep(5 * time.Second) // Avoid spamming logs...
 		}
 	}()
@@ -147,15 +125,12 @@ func run(
 	select {} /* Block forever */
 }
 
-func tuningCallback(_ *pb_core_messages.TuningState) {
-	log.Info().Msg("Tuning state changed - ignored.")
-}
-
-func onTerminate(sig os.Signal) {
+func onTerminate(sig os.Signal) error {
 	time.Sleep(50 * time.Millisecond)
-	log.Warn().Str("signal", sig.String()).Msg("mod-BatterySensor onTerminate, exiting safely")
+	log.Warn().Str("signal", sig.String()).Msg("Killed battery sensor, exiting safely")
 	exit_safely(bat)
 	os.Exit(0)
+	return nil
 }
 
 func main() {
@@ -171,5 +146,5 @@ func main() {
 		}
 	}()
 
-	serviceRunner.Run(run, tuningCallback, onTerminate, false)
+	roverlib.Run(run, onTerminate)
 }

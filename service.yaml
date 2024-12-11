@@ -1,13 +1,15 @@
-# Service definition
 name: battery
-description: Reads and reports the battery voltage
+author: vu-ase
+source: https://github.com/vu-ase/battery
+version: 1.0.0
+description: prevents the battery from under- or over-charging and reports the battery voltage
 
-# Depends on the controller output
-dependencies: []
+commands:
+  build: make build 
+  run: ./bin/battery
 
-# No outputs
+inputs: []
 outputs:
-  - name: battery-voltage
-    address: tcp://localhost:6000
+  - voltage
 
-
+configuration: []
