@@ -82,7 +82,6 @@ func critical_loop() error {
 
 // Trivial publisher which reads battery voltage and publishes it
 func publisher(output roverlib.WriteStream) {
-
 	for {
 		time.Sleep(time.Duration(sampleRate) * time.Second)
 
