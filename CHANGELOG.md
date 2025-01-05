@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/VU-ASE/battery/compare/v1.1.0...v1.2.0) (2025-01-05)
+
+
+### Features
+
+* use unreserved port ([9e42fd7](https://github.com/VU-ASE/battery/commit/9e42fd77f1fdcb5ca2d5949e0654780d7eb5c37a))
+
 ## [1.1.0](https://github.com/VU-ASE/battery/compare/v1.0.0...v1.1.0) (2025-01-05)
 
 
