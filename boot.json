@@ -2,12 +2,10 @@
     "name": "battery",
     "version": "1.0.1",
     "inputs": [],
-    "outputs": [
-        {
-            "name": "voltage",
-            "address": "tcp://*:9393"
-        }
-    ],
+    "outputs": [{
+        "name": "voltage",
+        "address": "tcp://*:5699"
+    }],
     "configuration": [],
     "tuning": {
         "enabled": false,
