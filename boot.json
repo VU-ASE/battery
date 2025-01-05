@@ -1,0 +1,16 @@
+{
+    "name": "battery",
+    "version": "1.0.1",
+    "inputs": [],
+    "outputs": [
+        {
+            "name": "voltage",
+            "address": "tcp://*:9393"
+        }
+    ],
+    "configuration": [],
+    "tuning": {
+        "enabled": false,
+        "address": "tcp://unix:8829"
+    }
+}

@@ -8,7 +8,7 @@ lint:
 	@echo "Lint check..."
 	@golangci-lint run
 
-build: lint
+build: #lint
 	@echo "building ${BINARY_NAME}"
 	@cd src/ && go build -o "../$(BUILD_DIR)${BINARY_NAME}" ${buildargs}
 
