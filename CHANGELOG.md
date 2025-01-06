@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/VU-ASE/battery/compare/v1.2.0...v1.2.1) (2025-01-06)
+
+
+### Bug Fixes
+
+* service.yaml version ([833c4cb](https://github.com/VU-ASE/battery/commit/833c4cbb7095a2882b14da8455905a270f01b349))
+
 ## [1.2.0](https://github.com/VU-ASE/battery/compare/v1.1.0...v1.2.0) (2025-01-05)
 
 
