@@ -1,7 +1,7 @@
 name: battery
 author: vu-ase
 source: https://github.com/vu-ase/battery
-version: 1.0.0
+version: 1.2.1
 description: prevents the battery from under- or over-charging and reports the battery voltage
 
 commands:
