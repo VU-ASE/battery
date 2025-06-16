@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/VU-ASE/battery/compare/v1.2.1...v1.3.0) (2025-06-16)
+
+
+### Features
+
+* added pr event trigger for build action ([e2c3fe3](https://github.com/VU-ASE/battery/commit/e2c3fe36b5a1dceeedad9808ec2d9c016c4f6d32))
+
 ## [1.2.1](https://github.com/VU-ASE/battery/compare/v1.2.0...v1.2.1) (2025-01-06)
 
 
