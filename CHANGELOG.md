@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0](https://github.com/VU-ASE/battery/compare/v1.2.1...v2.0.0) (2025-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to rovercom v2
+
+### Features
+
+* added pr event trigger for build action ([e2c3fe3](https://github.com/VU-ASE/battery/commit/e2c3fe36b5a1dceeedad9808ec2d9c016c4f6d32))
+* update to rovercom v2 ([b75af3f](https://github.com/VU-ASE/battery/commit/b75af3fbafb2e961b6bb6b27b5757176856cb9f6))
+
 ## [1.2.1](https://github.com/VU-ASE/battery/compare/v1.2.0...v1.2.1) (2025-01-06)
 
 
