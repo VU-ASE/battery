@@ -11,8 +11,8 @@ import (
 
 	battery "vu/ase/battery/src/sensor"
 
-	pb_outputs "github.com/VU-ASE/rovercom/packages/go/outputs"
-	roverlib "github.com/VU-ASE/roverlib-go/src"
+	pb_outputs "github.com/VU-ASE/rovercom/v2/packages/go/outputs"
+	roverlib "github.com/VU-ASE/roverlib-go/v2/src"
 	"github.com/rs/zerolog/log"
 )
 
