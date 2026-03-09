@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/VU-ASE/battery/compare/v2.0.0...v2.0.1) (2026-03-09)
+
+
+### Bug Fixes
+
+* using adaptive thresholds for supporting 3/4 cell batteries ([f386852](https://github.com/VU-ASE/battery/commit/f38685268ea8be086249251c99bfeb5bcf9640bb))
+
 ## [2.0.0](https://github.com/VU-ASE/battery/compare/v1.2.1...v2.0.0) (2025-07-31)
 
 
