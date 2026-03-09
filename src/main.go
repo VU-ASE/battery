@@ -20,8 +20,11 @@ const voltageLine = 2
 
 const sampleRate = 5
 const shutdownSys = true
-const batteryKill = 14.9
-const batteryWarn = 15.4
+
+// By default, set for 4S batteries, however if a 3S battery is plugged in
+// it will dynamically switch to matching thresholds
+var batteryKill = 14.9
+var batteryWarn = 15.4
 
 var voltageValue float64 = 0
 
@@ -31,6 +34,28 @@ func exit_safely(bat *battery.ADS1015) {
 	err := bat.Delete()
 	if err != nil {
 		log.Err(err).Msg("Failed to delete bat")
+	}
+}
+
+// Sets global variables `batteryKill` and `batteryWarn` depending on what acceptable
+// voltage ranges it receives.
+// Used voltage chart: https://p.kagi.com/proxy/percent-of-charge-vs-lipoly-pack-voltage_orig.jpg?c=04PBQu2n3SHkJegYIKajlTBUH3xZPAo90_4CORJAQgoeLkwKteL7XnRjeKYjOUffqA-UZkfogB11gN74IRpwkzp1KzzYYuTyH5T0BI222uYS6VgplYu_IkTGjrIXotnWrZYJcIBcY0B9eF4S9liNPAj5FO1nQKjUSAkPuAJP2Gc%3D
+
+func set_battery_thresholds(voltage float64) {
+	if voltage >= 14.7 && voltage <= 16.9 {
+		// 4S threshold
+		batteryKill = 14.90
+		batteryWarn = 15.40
+		log.Info().Msg("Detected a 4S battery")
+	} else if voltage >= 11.0 && voltage <= 12.80 {
+		// 3S threshold
+		batteryKill = 11.25
+		batteryWarn = 11.40
+		log.Info().Msg("Detected a 3S battery")
+	} else {
+		batteryKill = 14.90
+		batteryWarn = 15.40
+		log.Info().Msg("Did not detect 3S or 4S battery, defaulting to 4S thresholds")
 	}
 }
 
@@ -47,6 +72,14 @@ func critical_loop() error {
 		log.Fatal().Err(err).Msg("Failed to initialize settings")
 		return err
 	}
+
+	log.Info().Msg("Checking initial voltage for dynamic threshold adaptation")
+	v, err := bat.GetVoltage(voltageLine)
+	if err != nil {
+		log.Err(err).Msg("Failed to get battery voltage")
+		return err
+	}
+	set_battery_thresholds(v)
 
 	warningDisplayed := false
 	for {
